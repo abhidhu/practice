@@ -3,8 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.dto.ProductDto;
 import com.example.demo.service.ProductService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +14,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-@RequiredArgsConstructor
-@Slf4j
 public class ProductController {
     
+    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+
     private final ProductService productService;
     
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProducts() {
         log.info("GET /api/products - Fetching all products");
@@ -80,4 +84,3 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 }
-
