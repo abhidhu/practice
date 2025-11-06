@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 
@@ -18,15 +19,18 @@ public class DataInitializer {
     private static final Logger log = LoggerFactory.getLogger(DataInitializer.class);
 
     @Bean
-    public CommandLineRunner initializeData(UserRepository userRepository, ProductRepository productRepository) {
+    public CommandLineRunner initializeData(UserRepository userRepository,
+                                           ProductRepository productRepository,
+                                           PasswordEncoder passwordEncoder) {
         return args -> {
             log.info("Initializing sample data...");
 
-            // Create sample users
+            // Create sample users with encrypted passwords
             User user1 = new User();
             user1.setUsername("johndoe");
             user1.setEmail("john.doe@example.com");
             user1.setFullName("John Doe");
+            user1.setPassword(passwordEncoder.encode("password123"));
             user1.setActive(true);
             userRepository.save(user1);
 
@@ -34,6 +38,7 @@ public class DataInitializer {
             user2.setUsername("janedoe");
             user2.setEmail("jane.doe@example.com");
             user2.setFullName("Jane Doe");
+            user2.setPassword(passwordEncoder.encode("password123"));
             user2.setActive(true);
             userRepository.save(user2);
 
@@ -41,6 +46,7 @@ public class DataInitializer {
             user3.setUsername("bobsmith");
             user3.setEmail("bob.smith@example.com");
             user3.setFullName("Bob Smith");
+            user3.setPassword(passwordEncoder.encode("password123"));
             user3.setActive(false);
             userRepository.save(user3);
 
@@ -89,7 +95,7 @@ public class DataInitializer {
 
             log.info("Created {} products", productRepository.count());
             log.info("Sample data initialization completed!");
+            log.info("Sample users can login with username and password: 'password123'");
         };
     }
 }
-

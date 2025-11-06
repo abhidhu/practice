@@ -29,6 +29,11 @@ public class User {
     @Column(nullable = false)
     private String fullName;
 
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, max = 100, message = "Password must be between 6 and 100 characters")
+    @Column(nullable = false)
+    private String password;
+
     @Column(nullable = false)
     private boolean active = true;
 
@@ -41,11 +46,12 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String username, String email, String fullName, boolean active, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(Long id, String username, String email, String fullName, String password, boolean active, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.fullName = fullName;
+        this.password = password;
         this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -92,6 +98,14 @@ public class User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean isActive() {
