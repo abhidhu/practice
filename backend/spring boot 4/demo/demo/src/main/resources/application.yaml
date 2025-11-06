@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: spring-boot-4-migration
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/springboot_demo?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  security:
+    user:
+      name: admin
+      password: admin123
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.example.demo: DEBUG
+    org.springframework.web: INFO
+    org.hibernate: INFO
